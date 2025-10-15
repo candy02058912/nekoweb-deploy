@@ -54,7 +54,14 @@ runs:
 
     - name: Cleanup and deploy
       run: |
-        CMD="python ${{ github.action_path }}/deploy.py ${{ inputs.API_KEY }} ${{ inputs.BUILD_DIR }} ${{ inputs.DEPLOY_DIR }} ${{ inputs.NEKOWEB_PAGENAME }}"
+        # Construct base command with required positional arguments in correct order
+        CMD="python ${{ github.action_path }}/deploy.py"
+        CMD="$CMD ${{ inputs.API_KEY }}"  # 1. API key
+        CMD="$CMD ${{ inputs.BUILD_DIR }}"  # 2. Build directory
+        CMD="$CMD ${{ inputs.DEPLOY_DIR }}"  # 3. Deploy directory
+        CMD="$CMD ${{ inputs.NEKOWEB_PAGENAME }}"  # 4. Nekoweb pagename
+
+        # Add optional flags
         CLEANUP_INPUT="${{ inputs.CLEANUP }}"
         if [[ "${CLEANUP_INPUT,,}" == "true" ]]; then
           CMD="$CMD --cleanup"
