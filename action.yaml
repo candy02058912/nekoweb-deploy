@@ -54,7 +54,11 @@ runs:
 
     - name: Cleanup and deploy
       run: |
-        CMD="python ${{ github.action_path }}/deploy.py ${{ inputs.API_KEY }} ${{ inputs.BUILD_DIR }} ${{ inputs.DEPLOY_DIR }} ${{ inputs.CLEANUP }} ${{ inputs.NEKOWEB_PAGENAME }}"
+        CMD="python ${{ github.action_path }}/deploy.py ${{ inputs.API_KEY }} ${{ inputs.BUILD_DIR }} ${{ inputs.DEPLOY_DIR }} ${{ inputs.NEKOWEB_PAGENAME }}"
+        CLEANUP_INPUT="${{ inputs.CLEANUP }}"
+        if [[ "${CLEANUP_INPUT,,}" == "true" ]]; then
+          CMD="$CMD --cleanup"
+        fi
         if [[ -n "${{ inputs.DELAY }}" ]]; then
           CMD="$CMD --delay ${{ inputs.DELAY }}"
         fi

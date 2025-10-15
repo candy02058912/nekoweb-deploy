@@ -161,10 +161,10 @@ def main(
     api_key: str = typer.Argument(..., help="Your NekoWeb API key for authentication"),
     build_dir: str = typer.Argument(..., help="Directory containing your website build files"),
     deploy_dir: str = typer.Argument(..., help="Directory on NekoWeb to deploy to"),
-    cleanup: bool = typer.Argument(..., help="Whether to clean up the deploy directory before deployment"),
     nekoweb_pagename: str = typer.Argument(
         ..., help="Your NekoWeb page name (your username unless you use a custom domain)"
     ),
+    cleanup: bool = typer.Option(False, help="Whether to clean up the deploy directory before deployment"),
     delay: float = typer.Option(0.0, help="Delay in seconds between each API call (default is 0.0)"),
     retry_attempts: int = typer.Option(5, help="Number of times to retry a failed API call (default is 3)"),
     retry_delay: float = typer.Option(1.0, help="Delay in seconds between each retry attempt (default is 1.0)"),
