@@ -161,7 +161,7 @@ def main(
     api_key: str = typer.Argument(..., help="Your NekoWeb API key for authentication"),
     build_dir: str = typer.Argument(..., help="Directory containing your website build files"),
     deploy_dir: str = typer.Argument(..., help="Directory on NekoWeb to deploy to"),
-    cleanup: str = typer.Argument(..., help="Whether to clean up the deploy directory before deployment"),
+    cleanup: bool = typer.Argument(..., help="Whether to clean up the deploy directory before deployment"),
     nekoweb_pagename: str = typer.Argument(
         ..., help="Your NekoWeb page name (your username unless you use a custom domain)"
     ),
@@ -187,7 +187,7 @@ def main(
 
     # initialize
     api = NekoWebAPI(api_key, "nekoweb.org", nekoweb_pagename)
-    if cleanup.lower() == "true":
+    if cleanup:
         cleanup_remote_directory(api, deploy_dir)
 
     deploy(api, build_dir, deploy_dir, encryption_key, delay)
